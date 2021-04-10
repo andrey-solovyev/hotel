@@ -5,16 +5,34 @@ import java.util.UUID;
 
 public class Order {
     public UUID uuid;
+    /**Дата заявки**/
     private Calendar dateCreateOrder;
+    /**Отель**/
     private HotelRoom hotelRoom;
+    /**Забронирована ли заявка через интернет**/
+    private boolean isBooking;
+    /**Имя гостя на которого оформлен номер**/
     private Guest guest;
+    /**Дата заезда**/
     private Calendar arrivalDate;
+    /**Дата выезда**/
     private Calendar endDate;
 
-    public Order(Calendar dateCreateOrder, HotelRoom hotelRoom, Guest guest, Calendar arrivalDate, Calendar endDate) {
-        this.uuid=UUID.randomUUID();
+    public Order(UUID uuid, Calendar dateCreateOrder, HotelRoom hotelRoom, Guest guest, Calendar arrivalDate, Calendar endDate) {
+        this.uuid = UUID.randomUUID();
+        this.dateCreateOrder = dateCreateOrder;
+        this.isBooking = false;
+        this.hotelRoom = hotelRoom;
+        this.guest = guest;
+        this.arrivalDate = arrivalDate;
+        this.endDate = endDate;
+    }
+
+    public Order(UUID uuid, Calendar dateCreateOrder, HotelRoom hotelRoom, boolean isBooking, Guest guest, Calendar arrivalDate, Calendar endDate) {
+        this.uuid = UUID.randomUUID();
         this.dateCreateOrder = dateCreateOrder;
         this.hotelRoom = hotelRoom;
+        this.isBooking = isBooking;
         this.guest = guest;
         this.arrivalDate = arrivalDate;
         this.endDate = endDate;

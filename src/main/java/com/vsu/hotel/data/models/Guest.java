@@ -5,9 +5,13 @@ import java.util.UUID;
 
 public class Guest {
     private UUID uuid;
+    /**Имя гостя**/
     private String name;
+    /**Фамилия гостя**/
     private String surname;
+    /**Дата рождения**/
     private Date birthdate;
+    /**Паспортные данные**/
     private String passport;
 
     public Guest(String name, String surname, Date birthdate, String passport) {

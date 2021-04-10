@@ -1,7 +1,8 @@
-package com.vsu.hotel.data.repository;
+package com.vsu.hotel.data.repository.impl;
 
 import com.vsu.hotel.data.models.HotelRoom;
 import com.vsu.hotel.data.models.TypeRoom;
+import com.vsu.hotel.data.repository.RoomRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Repository
-public class RoomRepositoryImp implements RoomRepository{
+public class RoomRepositoryImp implements RoomRepository {
     private List<HotelRoom> hotelRooms;
 
     public RoomRepositoryImp() {

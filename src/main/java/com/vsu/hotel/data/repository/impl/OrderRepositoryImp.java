@@ -1,6 +1,7 @@
-package com.vsu.hotel.data.repository;
+package com.vsu.hotel.data.repository.impl;
 
 import com.vsu.hotel.data.models.Order;
+import com.vsu.hotel.data.repository.OrderRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -22,9 +23,24 @@ public class OrderRepositoryImp implements OrderRepository {
         }
         return true;
     }
+
+    public Order findById(UUID uuid) {
+        for (Order o:getOrders()){
+            if (o.uuid.equals(uuid)){
+                return o;
+            }
+        }
+        return null;
+    }
+
     public void addOrder(Order order){
         getOrders().add(order);
     }
+
+    public List<Order> allOrders() {
+        return orders;
+    }
+
     public Order getById(UUID uuid){
         for (Order o:getOrders()){
             if (o.getUuid().equals(uuid)){

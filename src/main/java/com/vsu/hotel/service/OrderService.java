@@ -1,27 +1,29 @@
 package com.vsu.hotel.service;
 
 import com.vsu.hotel.data.models.Order;
-import com.vsu.hotel.data.repository.OrderRepositoryImp;
-import com.vsu.hotel.data.repository.RoomRepositoryImp;
+import com.vsu.hotel.data.repository.OrderRepository;
+import com.vsu.hotel.data.repository.RoomRepository;
+import com.vsu.hotel.data.repository.impl.OrderRepositoryImp;
+import com.vsu.hotel.data.repository.impl.RoomRepositoryImp;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class OrderService {
-    private OrderRepositoryImp orderRepositoryImp;
-    private RoomRepositoryImp roomRepositoryImp;
+    private OrderRepository orderRepository;
+    private RoomRepository roomRepository;
 
-    public OrderService(OrderRepositoryImp orderRepositoryImp, RoomRepositoryImp roomRepositoryImp) {
-        this.orderRepositoryImp = orderRepositoryImp;
-        this.roomRepositoryImp = roomRepositoryImp;
-    }
     public void addNewOrder(Order order){
-        if (orderRepositoryImp.isFree(order.getArrivalDate(),order.getEndDate(),order.getHotelRoom().getUuid())){
-            orderRepositoryImp.addOrder(order);
+        if (orderRepository.isFree(order.getArrivalDate(),order.getEndDate(),order.getHotelRoom().getUuid())){
+            orderRepository.addOrder(order);
         }
     }
+    public Order findOrderById(UUID uuid){
+        return orderRepository.findById(uuid);
+    }
     public List<Order> getALlOrders(){
-        return orderRepositoryImp.getOrders();
+        return orderRepository.allOrders();
     }
 }
