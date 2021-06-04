@@ -2,58 +2,43 @@ package com.vsu.hotel.data.repository.impl;
 
 import com.vsu.hotel.data.models.Order;
 import com.vsu.hotel.data.repository.OrderRepository;
+import com.vsu.hotel.mapper.OrderRowMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
-import java.util.UUID;
+
 @Repository
 public class OrderRepositoryImp implements OrderRepository {
-    private List<Order> orders;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
-    public OrderRepositoryImp() {
-        orders= new ArrayList<>();
-    }
-    public boolean isFree(Calendar startDate, Calendar endDate, UUID uuidRoom){
-        for (Order o:getOrders()){
-            if (!(o.uuid.equals(uuidRoom) && (o.getArrivalDate().before(startDate) && o.getArrivalDate().before(endDate) || o.getEndDate().after(endDate)))){
-                return false;
-            }
-        }
-        return true;
+    @Override
+    public boolean isFree(Date arrivalDate, Date endDate, int id) {
+        return jdbcTemplate.queryForObject("SELECT o, CASE WHEN (o.arrival_date NOT BETWEEN ? AND ?) AND (o.arrival_date NOT BETWEEN ? AND ?) THEN true ELSE false END FROM order_room o WHERE o.room_id = ?"
+                , new Object[]{arrivalDate,endDate, arrivalDate,endDate,id}, Boolean.class);
     }
 
-    public Order findById(UUID uuid) {
-        for (Order o:getOrders()){
-            if (o.uuid.equals(uuid)){
-                return o;
-            }
-        }
-        return null;
+    @Override
+    public Order findById(int id) {
+        return jdbcTemplate.queryForObject("SELECT o FROM order_room o WHERE o.id = ?"
+                , new Object[]{id},(rs,i)->new OrderRowMapper().mapRow(rs,i));
     }
 
-    public void addOrder(Order order){
-        getOrders().add(order);
+    @Override
+    public void addOrder(Order order) {
+        jdbcTemplate.update("INSERT INTO order_room(date_create_order, room_id, isbooked_by_internet, person_id, arrival_date, end_date)  VALUES (?,?,?,?,?,?)",
+                new Object[]{order.getDateCreateOrder(),order.getHotelRoom().getId(),order.getArrivalDate(),order.getEndDate()});
     }
 
+    @Override
     public List<Order> allOrders() {
-        return orders;
-    }
-
-    public Order getById(UUID uuid){
-        for (Order o:getOrders()){
-            if (o.getUuid().equals(uuid)){
-                return o;
-            }
-        }
-        return null;
-    }
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
+        return jdbcTemplate.query("SELECT * FROM order_room",(rs,i) -> new OrderRowMapper().mapRow(rs,i));
     }
 }

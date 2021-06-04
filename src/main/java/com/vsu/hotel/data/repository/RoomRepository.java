@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 @Component
 public interface RoomRepository {
-    HotelRoom findById(UUID uuid);
+    HotelRoom findById(int id);
     List<HotelRoom> findByTypeRooms(TypeRoom typeRoom);
 
 }

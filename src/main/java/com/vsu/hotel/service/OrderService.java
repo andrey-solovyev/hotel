@@ -16,13 +16,14 @@ public class OrderService {
     private RoomRepository roomRepository;
 
     public void addNewOrder(Order order){
-        if (orderRepository.isFree(order.getArrivalDate(),order.getEndDate(),order.getHotelRoom().getUuid())){
+        if (orderRepository.isFree(order.getArrivalDate(),order.getEndDate(),order.getHotelRoom().getId())){
             orderRepository.addOrder(order);
         }
     }
-    public Order findOrderById(UUID uuid){
-        return orderRepository.findById(uuid);
+    public Order findOrderById(int id){
+        return orderRepository.findById(id);
     }
+
     public List<Order> getALlOrders(){
         return orderRepository.allOrders();
     }

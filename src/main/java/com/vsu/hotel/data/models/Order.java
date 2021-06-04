@@ -1,12 +1,20 @@
 package com.vsu.hotel.data.models;
 
-import java.util.Calendar;
-import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.UUID;
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Order {
-    public UUID uuid;
+    public int id;
     /**Дата заявки**/
-    private Calendar dateCreateOrder;
+    private Date dateCreateOrder;
     /**Отель**/
     private HotelRoom hotelRoom;
     /**Забронирована ли заявка через интернет**/
@@ -14,75 +22,8 @@ public class Order {
     /**Имя гостя на которого оформлен номер**/
     private Guest guest;
     /**Дата заезда**/
-    private Calendar arrivalDate;
+    private Date arrivalDate;
     /**Дата выезда**/
-    private Calendar endDate;
+    private Date endDate;
 
-    public Order(UUID uuid, Calendar dateCreateOrder, HotelRoom hotelRoom, Guest guest, Calendar arrivalDate, Calendar endDate) {
-        this.uuid = UUID.randomUUID();
-        this.dateCreateOrder = dateCreateOrder;
-        this.isBooking = false;
-        this.hotelRoom = hotelRoom;
-        this.guest = guest;
-        this.arrivalDate = arrivalDate;
-        this.endDate = endDate;
-    }
-
-    public Order(UUID uuid, Calendar dateCreateOrder, HotelRoom hotelRoom, boolean isBooking, Guest guest, Calendar arrivalDate, Calendar endDate) {
-        this.uuid = UUID.randomUUID();
-        this.dateCreateOrder = dateCreateOrder;
-        this.hotelRoom = hotelRoom;
-        this.isBooking = isBooking;
-        this.guest = guest;
-        this.arrivalDate = arrivalDate;
-        this.endDate = endDate;
-    }
-
-    public UUID getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
-    }
-
-    public Calendar getDateCreateOrder() {
-        return dateCreateOrder;
-    }
-
-    public void setDateCreateOrder(Calendar dateCreateOrder) {
-        this.dateCreateOrder = dateCreateOrder;
-    }
-
-    public HotelRoom getHotelRoom() {
-        return hotelRoom;
-    }
-
-    public void setHotelRoom(HotelRoom hotelRoom) {
-        this.hotelRoom = hotelRoom;
-    }
-
-    public Guest getGuest() {
-        return guest;
-    }
-
-    public void setGuest(Guest guest) {
-        this.guest = guest;
-    }
-
-    public Calendar getArrivalDate() {
-        return arrivalDate;
-    }
-
-    public void setArrivalDate(Calendar arrivalDate) {
-        this.arrivalDate = arrivalDate;
-    }
-
-    public Calendar getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Calendar endDate) {
-        this.endDate = endDate;
-    }
 }
